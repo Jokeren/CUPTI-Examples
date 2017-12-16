@@ -1,11 +1,3 @@
-/*
- * Copyright 2011-2015 NVIDIA Corporation. All rights reserved
- *
- * Sample CUPTI app to print a trace of CUDA API and GPU activity
- * using asynchronous handling of activity buffers.
- *
- */
-
 #include <stdio.h>
 #include <cuda.h>
 #include <cupti.h>
