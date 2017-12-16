@@ -37,7 +37,8 @@ extern __thread int64_t localId;
 static std::atomic<int> correlationId;
 
 
-__global__ void vecAdd(const int* A, const int* B, int* C, int N)
+static __global__ void
+vecAdd(const int* A, const int* B, int* C, int N)
 {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   if (i < N)
@@ -45,7 +46,8 @@ __global__ void vecAdd(const int* A, const int* B, int* C, int N)
 }
 
 
-__global__ void vecSub(const int* A, const int* B, int* C, int N)
+static __global__ void
+vecSub(const int* A, const int* B, int* C, int N)
 {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   if (i < N)
@@ -53,7 +55,7 @@ __global__ void vecSub(const int* A, const int* B, int* C, int N)
 }
 
 
-  static void
+static void
 do_pass_runtime(CUdevice device)
 {
   int *h_A, *h_B, *h_C;
@@ -107,7 +109,7 @@ do_pass_runtime(CUdevice device)
 }
 
 
-  static void
+static void
 do_pass_same_context(CUdevice device)
 {
   CUcontext deviceContext;
@@ -195,7 +197,8 @@ do_pass_same_context(CUdevice device)
   }
 }
 
-  static void
+
+static void
 do_pass_diff_context(CUdevice device)
 {
 #pragma omp parallel 
@@ -279,7 +282,8 @@ do_pass_diff_context(CUdevice device)
   }
 }
 
-  int
+
+int
 main(int argc, char *argv[])
 {
   if (argc < 2) {
@@ -322,4 +326,3 @@ main(int argc, char *argv[])
   }
   return 0;
 }
-

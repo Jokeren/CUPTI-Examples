@@ -29,7 +29,8 @@ static CUpti_SubscriberHandle cuptiSubscriber;
 
 __thread int64_t localId;
 
-  static const char *
+
+static const char *
 getMemcpyKindString(CUpti_ActivityMemcpyKind kind)
 {
   switch (kind) {
@@ -58,7 +59,8 @@ getMemcpyKindString(CUpti_ActivityMemcpyKind kind)
   return "<unknown>";
 }
 
-  const char *
+
+const char *
 getActivityOverheadKindString(CUpti_ActivityOverheadKind kind)
 {
   switch (kind) {
@@ -77,7 +79,8 @@ getActivityOverheadKindString(CUpti_ActivityOverheadKind kind)
   return "<unknown>";
 }
 
-  const char *
+
+const char *
 getActivityObjectKindString(CUpti_ActivityObjectKind kind)
 {
   switch (kind) {
@@ -98,7 +101,8 @@ getActivityObjectKindString(CUpti_ActivityObjectKind kind)
   return "<unknown>";
 }
 
-  uint32_t
+
+uint32_t
 getActivityObjectKindId(CUpti_ActivityObjectKind kind, CUpti_ActivityObjectKindId *id)
 {
   switch (kind) {
@@ -119,7 +123,8 @@ getActivityObjectKindId(CUpti_ActivityObjectKind kind, CUpti_ActivityObjectKindI
   return 0xffffffff;
 }
 
-  static const char *
+
+static const char *
 getComputeApiKindString(CUpti_ActivityComputeApiKind kind)
 {
   switch (kind) {
@@ -134,7 +139,8 @@ getComputeApiKindString(CUpti_ActivityComputeApiKind kind)
   return "<unknown>";
 }
 
-  static const char *
+
+static const char *
 getStallReasonString(CUpti_ActivityPCSamplingStallReason reason)
 {
   switch (reason) {
@@ -169,7 +175,8 @@ getStallReasonString(CUpti_ActivityPCSamplingStallReason reason)
   return "<unknown>";
 }
 
-  static void
+
+static void
 printActivity(CUpti_Activity *record)
 {
   switch (record->kind)
@@ -198,7 +205,9 @@ printActivity(CUpti_Activity *record)
   }
 }
 
-void CUPTIAPI bufferRequested(uint8_t **buffer, size_t *size, size_t *maxNumRecords)
+
+void CUPTIAPI
+bufferRequested(uint8_t **buffer, size_t *size, size_t *maxNumRecords)
 {
   uint8_t *bfr = (uint8_t *) malloc(BUF_SIZE + ALIGN_SIZE);
   if (bfr == NULL) {
@@ -211,7 +220,9 @@ void CUPTIAPI bufferRequested(uint8_t **buffer, size_t *size, size_t *maxNumReco
   *maxNumRecords = 0;
 }
 
-void CUPTIAPI bufferCompleted(CUcontext ctx, uint32_t streamId, uint8_t *buffer, size_t size, size_t validSize)
+
+void CUPTIAPI
+bufferCompleted(CUcontext ctx, uint32_t streamId, uint8_t *buffer, size_t size, size_t validSize)
 {
   CUptiResult status;
   CUpti_Activity *record = NULL;
@@ -241,7 +252,7 @@ void CUPTIAPI bufferCompleted(CUcontext ctx, uint32_t streamId, uint8_t *buffer,
 }
 
 
-  void
+void
 finiTrace()
 {
   CUPTI_CALL(cuptiUnsubscribe(cuptiSubscriber));
@@ -250,7 +261,8 @@ finiTrace()
 }
 
 
-void cuptiSubscriberCallback(
+void
+cuptiSubscriberCallback(
   void *userdata,
   CUpti_CallbackDomain domain,
   CUpti_CallbackId cb_id,
@@ -274,7 +286,7 @@ void cuptiSubscriberCallback(
 }
 
 
-  void
+void
 initTrace()
 {
   // Subscribe callbacks
