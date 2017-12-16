@@ -195,6 +195,9 @@ do_pass_same_context(CUdevice device)
     free(h_B);
     free(h_C);
   }
+  cuModuleUnload(moduleAdd);
+  cuModuleUnload(moduleSub);
+  cuCtxDestroy(deviceContext);
 }
 
 
@@ -250,6 +253,7 @@ do_pass_diff_context(CUdevice device)
       RUNTIME_API_CALL(cudaFree(d_A1));
       RUNTIME_API_CALL(cudaFree(d_B1));
       RUNTIME_API_CALL(cudaFree(d_C1));
+      cuModuleUnload(moduleAdd);
     } else if (omp_get_thread_num() == 1) {
       CUmodule moduleSub;
       CUfunction vecSub;
@@ -275,10 +279,12 @@ do_pass_diff_context(CUdevice device)
       RUNTIME_API_CALL(cudaFree(d_A2));
       RUNTIME_API_CALL(cudaFree(d_B2));
       RUNTIME_API_CALL(cudaFree(d_C2));
+      cuModuleUnload(moduleSub);
     }
     free(h_A);
     free(h_B);
     free(h_C);
+    //cuCtxDestroy(context);
   }
 }
 
